@@ -56,10 +56,24 @@ class App extends React.Component {
         
         for (let bar in bars) {
           bars[bar].key = bar;
-          
           barArray.push(bars[bar]);
         }
         console.log(barArray);
+
+        const alphabetizeBarList = function(a, b) {
+          const barA = a.barName;
+          const barB = b.barName;
+
+          let comparison = 0;
+          if (barA > barB) {
+            comparison = 1;
+          } else if (barA < barB) {
+            comparison = -1;
+          }
+          return comparison;
+        }
+
+        barArray.sort(alphabetizeBarList);
 
 
         this.setState({
@@ -69,9 +83,6 @@ class App extends React.Component {
 
     }
 
-    // createKey(bar) {
-    //   return bar.toLower().replace(/[\s-.,]/g, '');
-    // }
 
     handleChange(e) {
       this.setState({
@@ -99,16 +110,18 @@ class App extends React.Component {
       const currentBars = Array.from(this.state.bars);
       console.log(currentBars);
       
-
+      // check if barName is already in the database
       const barFound = currentBars.findIndex((currentBar) => {
         return currentBar.barName === bar.barName;
       }) 
       
       console.log(barFound);
-      
+
+      // if current bar isn't in the database, add it      
       if(barFound === -1) {
         currentBars.push(bar);
         console.log(currentBars)
+        // add drink to drinks array
         currentBars[currentBars.length - 1].drinks.push(drink)
         dbRef.push(currentBars[currentBars.length - 1]);
       }

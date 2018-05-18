@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import firebase from 'firebase';
 import Header from './Header';
 import NewDrinkForm from './NewDrinkForm';
+import SearchForm from "./SearchForm";
+import SearchResults from './SearchResults';
 import BarList from './BarList';
 import Footer from './Footer';
 
@@ -28,24 +30,16 @@ class App extends React.Component {
         barName: '',
         drinkName: '',
         drinkNotes: '',
-        drinkRating: ''
+        drinkRating: '',
+        search: '',
+        searchMatches: []
       }
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
+      this.handleSearch = this.handleSearch.bind(this);
     }
 
-    componentDidMount() {
-      console.log('mounted');
-      // create an array of bars in state - done
-      // change dbRef to 'bars' - done
-      // within bars have entries which are bar names, within that --> nested object of drinks - done
-      // when pushing need to check if bar name exists already
-      // if bar name exists already push to that object
-      // if does not, make db reference to new bar
-      // inside that push new drink(s)
-
-      // drinks array becomes array of drinks for that bar
-    
+    componentDidMount() {    
       const dbRef = firebase.database().ref('bars');
       dbRef.on('value', (snapshot) => {
         const bars = snapshot.val();
@@ -58,7 +52,7 @@ class App extends React.Component {
           bars[bar].key = bar;
           barArray.push(bars[bar]);
         }
-        console.log(barArray);
+        //console.log(barArray);
 
         const alphabetizeBarList = function(a, b) {
           const barA = a.barName;
@@ -88,6 +82,46 @@ class App extends React.Component {
       this.setState({
         [e.target.name]: e.target.value
       })
+    }
+
+    handleSearch(e) {
+      e.preventDefault();
+      const searchTerm = this.state.search;
+      console.log(searchTerm);
+
+      const barArray = Array.from(this.state.bars);
+      const matchArray = [];
+      for (let i=0; i < barArray.length; i++) {
+
+        let thisBar = barArray[i];
+        let thisBarsDrinks = thisBar.drinks;
+        let thisBarsMatches = [];
+
+        for (let j=0; j < thisBarsDrinks.length; j++) {
+          if (thisBarsDrinks[j].drinkName === searchTerm) {
+            //console.log(`Match! ${thisBarsDrinks[j].drinkName}`);
+            thisBarsMatches.push(thisBarsDrinks[j]);
+          }          
+        }
+        if (thisBarsMatches.length > 0) {
+          //console.log(thisBarsMatches);
+          const match = {};
+          match.searchTerm = searchTerm;
+          match.barName = thisBar.barName;
+          match.drinks = thisBarsMatches;
+          matchArray.push(match);
+        }
+
+      }
+      console.log(matchArray);
+      this.setState({
+        search: '',
+        searchMatches: matchArray
+      },() => {
+        console.log(this.state.searchMatches);
+      })
+      document.getElementById('searchResults').classList.remove('hidden');
+      
     }
 
     handleSubmit(e) {
@@ -120,7 +154,7 @@ class App extends React.Component {
       // if current bar isn't in the database, add it      
       if(barFound === -1) {
         currentBars.push(bar);
-        console.log(currentBars)
+        //console.log(currentBars)
         // add drink to drinks array
         currentBars[currentBars.length - 1].drinks.push(drink)
         dbRef.push(currentBars[currentBars.length - 1]);
@@ -153,23 +187,21 @@ class App extends React.Component {
     }
 
     render() {
-      return (
-        <div>
+      return <div>
           <Header />
           <main>
-            <NewDrinkForm 
-              handleChange={this.handleChange} 
-              handleSubmit={this.handleSubmit} 
-              barName={this.state.barName}
-              drinkName={this.state.drinkName}
-              drinkNotes={this.state.drinkNotes}
-            />
+            <NewDrinkForm handleChange={this.handleChange} handleSubmit={this.handleSubmit} barName={this.state.barName} drinkName={this.state.drinkName} drinkNotes={this.state.drinkNotes} />
             <h2>Bars Visited</h2>
             <BarList bars={this.state.bars} />
+            <SearchForm 
+              handleChange={this.handleChange} 
+              handleSearch={this.handleSearch} 
+              searchTerm={this.state.search}
+            />
+            <SearchResults searchMatches={this.state.searchMatches} />
           </main>
           <Footer />
-        </div>
-      )
+        </div>;
     }
 }
 

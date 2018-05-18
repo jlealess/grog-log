@@ -115,7 +115,6 @@ class App extends React.Component {
       }
       console.log(matchArray);
       this.setState({
-        search: '',
         searchMatches: matchArray
       },() => {
         console.log(this.state.searchMatches);
@@ -198,7 +197,7 @@ class App extends React.Component {
               handleSearch={this.handleSearch} 
               searchTerm={this.state.search}
             />
-            <SearchResults searchMatches={this.state.searchMatches} />
+            <SearchResults searchMatches={this.state.searchMatches} searchTerm={this.state.search} />
           </main>
           <Footer />
         </div>;

@@ -3,6 +3,7 @@ import React from 'react';
 class SearchResults extends React.Component {
     componentDidMount() {
         this.setState({
+            search: '',
             searchMatches: []
         })
     }
@@ -23,7 +24,7 @@ class SearchResults extends React.Component {
 
         return(
             <div className="search-results hidden" id="searchResults">
-                <h2>Search Results</h2>
+                <h2>Search results for {this.props.searchTerm}</h2>
                 {hasResults}
             </div>
         );

@@ -1,6 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import firebase from 'firebase';
+import {
+  BrowserRouter as Router,
+  Route, Link
+} from 'react-router-dom';
+
 import Header from './Header';
 import NewDrinkForm from './NewDrinkForm';
 import SearchForm from "./SearchForm";
@@ -186,21 +191,19 @@ class App extends React.Component {
     }
 
     render() {
-      return <div>
-          <Header />
-          <main>
-            <NewDrinkForm handleChange={this.handleChange} handleSubmit={this.handleSubmit} barName={this.state.barName} drinkName={this.state.drinkName} drinkNotes={this.state.drinkNotes} />
-            <h2>Bars Visited</h2>
-            <BarList bars={this.state.bars} />
-            <SearchForm 
-              handleChange={this.handleChange} 
-              handleSearch={this.handleSearch} 
-              searchTerm={this.state.search}
-            />
-            <SearchResults searchMatches={this.state.searchMatches} searchTerm={this.state.search} />
-          </main>
-          <Footer />
-        </div>;
+      return <Router>
+          <div>
+            <Header />
+            <main>
+              <Route path="/add" render={() => <NewDrinkForm handleChange={this.handleChange} handleSubmit={this.handleSubmit} barName={this.state.barName} drinkName={this.state.drinkName} drinkNotes={this.state.drinkNotes} />} />
+              <Route path="/bars" render={() => <BarList bars={this.state.bars} />} />
+              <Route path="/search" render={() => <SearchForm handleChange={this.handleChange} handleSearch={this.handleSearch} searchTerm={this.state.search} />} />
+              <Route path="/search" render={() => <SearchResults searchMatches={this.state.searchMatches} searchTerm={this.state.search} />} />
+              
+            </main>
+            <Footer />
+          </div>
+        </Router>;
     }
 }
 

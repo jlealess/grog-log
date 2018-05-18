@@ -1,3 +1,10 @@
 .hidden {
     display: none;
 }
+
+div.app > div {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+    // grid-template-columns: 1fr 750px 1fr;
+}

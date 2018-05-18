@@ -4,7 +4,11 @@ const Bar = (props) => {
     return (
         <li>
             <h3>{props.barName}</h3>
-            <p>{props.drinkName} – {props.drinkRating}</p>
+            <ul className="drinks-list">
+                {props.drinks.map((drink, i) => {
+                    return <li key={`drinks-${i}`}>{drink.drinkName} - {drink.drinkRating}</li>
+                })}
+            </ul>
         </li>
     );
 }

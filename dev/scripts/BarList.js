@@ -4,10 +4,9 @@ import Bar from './Bar';
 const BarList = (props) => {
     return (
         <ul className="bar-list">
-            {props.drinks.map((drink, i) => {
-                return <Bar barName={drink.barName} drinkName={drink.drinkName} drinkRating={drink.drinkRating} key={i} />
+            {props.bars.map((bar, i) => {
+                return <Bar barName={bar.barName} drinks={bar.drinks} key={i} />
             })}
-            {/* Bars would go here */}
         </ul>
     )
 }

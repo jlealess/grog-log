@@ -36,28 +36,42 @@ class App extends React.Component {
 
     componentDidMount() {
       console.log('mounted');
-    
-      const dbRef = firebase.database().ref('drinks');
-      dbRef.on('value', (snapshot) => {
-        const drinks = snapshot.val();
-        // console.log(drinks);
+      // create an array of bars in state - done
+      // change dbRef to 'bars' - done
+      // within bars have entries which are bar names, within that --> nested object of drinks - done
+      // when pushing need to check if bar name exists already
+      // if bar name exists already push to that object
+      // if does not, make db reference to new bar
+      // inside that push new drink(s)
 
+      // drinks array becomes array of drinks for that bar
+    
+      const dbRef = firebase.database().ref('bars');
+      dbRef.on('value', (snapshot) => {
+        const bars = snapshot.val();
+        // console.log(drinks);
+        const barArray = []
         const drinkArray = [];
-        for (let drink in drinks) {
-          drinks[drink].key = drink;
-          drinkArray.push(drinks[drink]);
+
+        
+        for (let bar in bars) {
+          bars[bar].key = bar;
+          
+          barArray.push(bars[bar]);
         }
+        console.log(barArray);
+
 
         this.setState({
-          drinks: drinkArray
+          bars: barArray
         })
       })
 
     }
 
-    createKey(bar) {
-      return bar.toLower().replace(/[\s-.,]/g, '');
-    }
+    // createKey(bar) {
+    //   return bar.toLower().replace(/[\s-.,]/g, '');
+    // }
 
     handleChange(e) {
       this.setState({
@@ -67,17 +81,49 @@ class App extends React.Component {
 
     handleSubmit(e) {
       e.preventDefault();
-      
-      const drink = {
+
+      let bar = {
         barName: this.state.barName,
+        drinks: []
+      }
+
+
+      const drink = {
         drinkName: this.state.drinkName,
         drinkNotes: this.state.drinkNotes,
         drinkRating: this.state.drinkRating
       }
-      console.log(drink);
 
-      const dbRef = firebase.database().ref('drinks');
-      dbRef.push(drink);
+      const dbRef = firebase.database().ref('bars');
+
+      const currentBars = Array.from(this.state.bars);
+      console.log(currentBars);
+      
+
+      const barFound = currentBars.findIndex((currentBar) => {
+        return currentBar.barName === bar.barName;
+      }) 
+      
+      console.log(barFound);
+      
+      if(barFound === -1) {
+        currentBars.push(bar);
+        console.log(currentBars)
+        currentBars[currentBars.length - 1].drinks.push(drink)
+        dbRef.push(currentBars[currentBars.length - 1]);
+      }
+      else {
+  
+        currentBars[barFound].drinks.push(drink)
+  
+        dbRef.child(currentBars[barFound].key)
+          .update({
+            drinks: currentBars[barFound].drinks
+          });
+
+      }
+
+      console.log(currentBars);
 
       this.setState({
         barName: '',
@@ -106,7 +152,7 @@ class App extends React.Component {
               drinkNotes={this.state.drinkNotes}
             />
             <h2>Bars Visited</h2>
-            <BarList drinks={this.state.drinks} />
+            <BarList bars={this.state.bars} />
           </main>
           <Footer />
         </div>

@@ -1,22 +1,24 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 class Header extends React.Component {
     render() {
         return (
 
          <header>
-            <h1>Grog Log</h1>
+            <h1>
+                <img src="images/grog-log.svg" alt="Grog Log" />
+            </h1>
             <nav>
               <ul>
                 <li>
-                  <Link to="/add">Add</Link>
+                    <NavLink to="/add" activeClassName="active">Add</NavLink>
                 </li>
                 <li>
-                    <Link to="/bars">Bars</Link>
+                    <NavLink to="/bars" activeClassName="active">Bars</NavLink>
                 </li>
                 <li>
-                    <Link to="/search">Search</Link>
+                    <NavLink to="/search" activeClassName="active">Search</NavLink>
                 </li>
               </ul>
             </nav>

@@ -15,14 +15,18 @@ const NewDrinkForm = (props) => {
                 <label htmlFor="drinkNotes">Notes</label>
                 <textarea name="drinkNotes" id="drinkNotes" onChange={props.handleChange} value={props.drinkNotes}></textarea>
             </div>
-            <div>
-                <label htmlFor="drinkRating">Rating</label>
-                <input type="radio" name="drinkRating" id="drinkRatingGood" value="Good" onChange={props.handleChange} />
-                <label htmlFor="drinkRatingGood">Good</label>
-                <input type="radio" name="drinkRating" id="drinkRatingOK" value="OK" onChange={props.handleChange}/>
-                <label htmlFor="drinkRatingOK">OK</label>
-                <input type="radio" name="drinkRating" id="drinkRatingBad" value="Bad" onChange={props.handleChange}/>
-                <label htmlFor="drinkRatingBad">Bad</label>
+            <div className="form-flex">
+                <div>
+                    <label htmlFor="drinkRating">Rating</label>
+                </div>
+                <div className="sentence-case">
+                    <input type="radio" name="drinkRating" id="drinkRatingGood" value="Good" onChange={props.handleChange} />
+                    <label htmlFor="drinkRatingGood">Good</label>
+                    <input type="radio" name="drinkRating" id="drinkRatingOK" value="OK" onChange={props.handleChange}/>
+                    <label htmlFor="drinkRatingOK">OK</label>
+                    <input type="radio" name="drinkRating" id="drinkRatingBad" value="Bad" onChange={props.handleChange}/>
+                    <label htmlFor="drinkRatingBad">Bad</label>
+                </div>
             </div>
             <input type="submit" value="Log it" />
         </form>

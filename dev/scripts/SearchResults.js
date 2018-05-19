@@ -13,10 +13,11 @@ class SearchResults extends React.Component {
                 <ul className="search-results-list">
                     {this.props.searchMatches.map((match, i) => {
                         return <li key={`matches-${i}`}>
-                            <h3>{match.drinks[0].drinkName}</h3>
-                            <p>{match.barName}</p>
+                            <h3>{match.drinks[0].drinkName} – {match.barName}</h3>
                             <p>Rating: {match.drinks[0].drinkRating}</p>
-                            <p>{match.drinks[0].drinkNotes}</p>
+                            {match.drinks[0].drinkNotes.length > 0 &&
+                                <p>Notes: {match.drinks[0].drinkNotes}</p>
+                            }
                         </li>
                     })}
                 </ul>

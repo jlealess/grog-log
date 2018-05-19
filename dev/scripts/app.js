@@ -103,7 +103,7 @@ class App extends React.Component {
         let thisBarsMatches = [];
 
         for (let j=0; j < thisBarsDrinks.length; j++) {
-          if (thisBarsDrinks[j].drinkName === searchTerm) {
+          if (thisBarsDrinks[j].drinkName.toLowerCase() === searchTerm.toLowerCase()) {
             //console.log(`Match! ${thisBarsDrinks[j].drinkName}`);
             thisBarsMatches.push(thisBarsDrinks[j]);
           }          

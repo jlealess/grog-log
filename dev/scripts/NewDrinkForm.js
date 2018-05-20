@@ -28,7 +28,7 @@ const NewDrinkForm = (props) => {
                     <label htmlFor="drinkRatingBad">Bad</label>
                 </div>
             </div>
-            <input type="submit" value="Log it" />
+            <input type="submit" className="button button-submit" value="Log that grog" />
         </form>
     );
 }

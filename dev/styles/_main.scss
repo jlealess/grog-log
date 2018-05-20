@@ -3,7 +3,7 @@ html {
 }
 
 body {
-    background-color: lighten($light-brown, 50);
+    // background-color: lighten($light-brown, 50);
     color: $darkest-brown;
     font-family: $body-font;
     font-size: 2rem;
@@ -17,15 +17,17 @@ a {
 
     &:hover {
         color: $light-maroon;
-        border-bottom: 1px solid $light-maroon;
+        text-decoration: underline;
     }
 }
 
 div.app > div {
+    background-color: $lightest-brown;
+        background-image: url(../../images/tiki-bg.svg);
     display: grid;
     grid-template-rows: auto 1fr auto;
     min-height: 100vh;
-    grid-template-columns: 1fr 500px 1fr;
+    grid-template-columns: 1fr minmax(300px, 750px) 1fr;
 }
 
 form {
@@ -59,6 +61,12 @@ form {
         }
     }
 
+    input[type=text]:focus,
+    input[type=search]:focus,
+    textarea:focus {
+        outline: 2px solid $light-pink;
+    }
+
     input[type=radio] {
         display: inline-block;
         margin: 0 6px 0 20px;
@@ -84,10 +92,12 @@ form {
 
 footer, 
 header {
-    grid-column: 1 / -1;
+    background-color: $lightest-brown;
+    grid-column: 2 / 3;
 }
 
 footer {
+    font-size: 1.5rem;
     font-weight: $bold;
     text-align: center;
     text-transform: uppercase;
@@ -106,10 +116,13 @@ header {
 }
 
 main {
+    background-color: $lightest-brown;
     grid-column: 2 / 3;
+    padding: 0 50px;
 }
 
 nav {
+    margin-bottom: 1rem;
     text-align: center;
 
     ul {
@@ -120,7 +133,16 @@ nav {
         width: 100%;
 
         li {
+            background-image: url(../../images/tiki-star-brown.svg);
+            background-repeat: no-repeat;
+            background-position-x: 100%;
             display: inline;
+            padding-right: 2.2rem;
+
+            &:last-of-type {
+                background-image: none;
+                padding-right: 0;
+            }
 
             a {
                 color: $dark-pink;
@@ -136,7 +158,7 @@ nav {
 }
 
 .active {
-        color: $dark-maroon;
+    color: $dark-maroon;
 }
 
 .bar-list,
@@ -145,15 +167,68 @@ nav {
     margin: 0;
     padding: 0;
     text-align: center;
+
+    h3 {
+        transition: $transition;
+        &:hover {
+            color: $dark-maroon;
+            text-decoration: underline;
+        }
+    }
+
+    
+    &-item {
+        margin-bottom: 1.5rem;
+            h3 {
+                padding-bottom: 1rem;
+            }
+    }
     
     li {
         padding: 0;
+
+        i {
+            margin-left: 5px;
+        }
     }
 
+    .react-sanfona-item-body-wrapper > div h3 {
+        display: none;
+    }
+}
+
+.button {
+    background-color: $light-orange;
+    color: white;
+    text-transform: uppercase;
+    transition: $transition;
+
+    &:hover {
+        background-color: $bright-orange;
+    }
 }
 
 .hidden {
     display: none;
+}
+
+.search-form {
+    .search-bar {
+        display: grid;
+        grid-template-columns: 1fr auto;
+
+        input[type=search] {
+            &:required {
+
+                box-shadow: none;
+            }
+        }
+
+        .button {
+            border: none;
+            padding: 0 20px;
+        }
+    }
 }
 
 .search-results-list {

@@ -5,7 +5,7 @@ import {
   BrowserRouter as Router,
   Route, Link
 } from 'react-router-dom';
-
+import AccordionInstance from './AccordionInstance';
 import Header from './Header';
 import NewDrinkForm from './NewDrinkForm';
 import SearchForm from "./SearchForm";
@@ -42,6 +42,7 @@ class App extends React.Component {
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
       this.handleSearch = this.handleSearch.bind(this);
+      this.accordionize = this.accordionize.bind(this);
     }
 
     componentDidMount() {    
@@ -80,6 +81,14 @@ class App extends React.Component {
         })
       })
 
+    }
+
+    accordionize(e) {
+        console.log(e);
+        
+        //$(this).next().slideToggle('fast');
+        //Hide the other panels
+        //$(".accordion-content").not($(this).next()).slideUp('fast');
     }
 
 
@@ -199,7 +208,6 @@ class App extends React.Component {
               <Route path="/bars" render={() => <BarList bars={this.state.bars} />} />
               <Route path="/search" render={() => <SearchForm handleChange={this.handleChange} handleSearch={this.handleSearch} searchTerm={this.state.search} />} />
               <Route path="/search" render={() => <SearchResults searchMatches={this.state.searchMatches} searchTerm={this.state.search} />} />
-              
             </main>
             <Footer />
           </div>

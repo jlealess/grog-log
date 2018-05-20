@@ -5,24 +5,24 @@ class Bar extends React.Component {
     renderSwitch(drinkRating) {
         switch (drinkRating) {
             case 'Bad':
-                return <i class="fas fa-skull"></i>;
+                return <i className="fas fa-skull"></i>;
             case 'Good':
-                return <i class="fas fa-fire"></i>;
+                return <i className="fas fa-fire" />;
             default:
                 return '';
         }
     }    
     render() {
-        return (
-            <li>
-                <h3>{this.props.barName}</h3>
-                <ul className="drinks-list">
-                    {this.props.drinks.map((drink, i) => {
-                        return <li key={`drinks-${i}`}>{drink.drinkName} {this.renderSwitch(drink.drinkRating)}</li>
-                    })}
-                </ul>
-            </li>
-        );
+        return <div>
+            <h3>{this.props.barName}</h3>
+            <ul className="drinks-list accordion-content">
+              {this.props.drinks.map((drink, i) => {
+                return <li key={`drinks-${i}`}>
+                    {drink.drinkName} {this.renderSwitch(drink.drinkRating)}
+                  </li>;
+              })}
+            </ul>
+          </div>;
     }
 }
 

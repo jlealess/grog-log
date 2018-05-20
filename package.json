@@ -31,6 +31,9 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
-    "node-sass": "^4.7.1"
+    "node-sass": "^4.7.1",
+    "react-collapsible": "^2.2.0",
+    "react-responsive-accordion": "^1.0.0",
+    "react-sanfona": "^1.2.2"
   }
 }

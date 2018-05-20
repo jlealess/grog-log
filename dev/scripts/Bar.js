@@ -18,8 +18,9 @@ class Bar extends React.Component {
             <ul className="drinks-list accordion-content">
               {this.props.drinks.map((drink, i) => {
                 return <li key={`drinks-${i}`}>
-                    {drink.drinkName} {this.renderSwitch(drink.drinkRating)}
-                  </li>;
+                    {drink.drinkName} 
+                    {this.renderSwitch(drink.drinkRating)}
+                    </li>;
               })}
             </ul>
           </div>;

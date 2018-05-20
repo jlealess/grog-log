@@ -191,7 +191,7 @@ class App extends React.Component {
     render() {
       return <Router>
           <div>
-          <Route exact path="/" render={() => <Redirect to="/bars" />} />
+          <Route exact path="/" render={() => <Redirect to="/add" />} />
             <Header />
             <main>
               <Route path="/add" render={() => <NewDrinkForm handleChange={this.handleChange} handleSubmit={this.handleSubmit} barName={this.state.barName} drinkName={this.state.drinkName} drinkNotes={this.state.drinkNotes} />} />

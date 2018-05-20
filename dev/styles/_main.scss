@@ -23,7 +23,7 @@ a {
 
 div.app > div {
     background-color: $lightest-brown;
-        background-image: url(../../images/tiki-bg.svg);
+    background-image: url(../../images/tiki-bg.svg);
     display: grid;
     grid-template-rows: auto 1fr auto;
     min-height: 100vh;
@@ -41,6 +41,10 @@ form {
         display: block;
         padding: 10px;
         width: 100%;
+
+        &:required {
+            box-shadow: none;
+        }
     }
 
     input[type=submit] {
@@ -91,12 +95,15 @@ form {
 }
 
 footer, 
-header {
+header,
+main {
     background-color: $lightest-brown;
+    box-shadow: $box-shadow;
     grid-column: 2 / 3;
 }
 
 footer {
+    box-shadow:  -1px 0px 2px rgba(0,0,0,0.3);     
     font-size: 1.5rem;
     font-weight: $bold;
     text-align: center;
@@ -104,8 +111,16 @@ footer {
 }
 
 header {
+    box-shadow:  0px 3px 2px rgba(0,0,0,0.3);     
+
     h1 {
         margin-bottom: 1rem;
+
+        &:hover {
+            animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+            animation-direction: reverse;
+
+        }
     }
     
     img {
@@ -116,8 +131,6 @@ header {
 }
 
 main {
-    background-color: $lightest-brown;
-    grid-column: 2 / 3;
     padding: 0 50px;
 }
 
@@ -152,6 +165,10 @@ nav {
                 padding: 20px;
                 text-decoration: none;
                 text-transform: uppercase;
+
+                &:hover {
+                      animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+                }
             }
         }
     }
@@ -215,19 +232,23 @@ nav {
 .search-form {
     .search-bar {
         display: grid;
-        grid-template-columns: 1fr auto;
-
-        input[type=search] {
-            &:required {
-
-                box-shadow: none;
-            }
-        }
+        grid-template-columns: 1fr;
+        position: relative;
 
         .button {
             border: none;
+            height: 100%;
             padding: 0 20px;
+            position: absolute;
+            right: 0;
         }
+    }
+}
+
+.search-results {
+    h2 {
+        font-size: 1em;
+        padding-top: 1rem;
     }
 }
 
@@ -241,3 +262,21 @@ nav {
     }
 }
 
+@keyframes shake {
+  10%, 90% {
+    transform: rotate(-5deg);
+  }
+  
+  20%, 80% {
+    transform: rotate(5px);
+  }
+
+  30%, 50%, 70% {
+    transform: rotate(-3px);
+  }
+
+  40%, 60% {
+    transform: rotate(10px);
+  }
+}
+/* adapted from https://css-tricks.com/snippets/css/shake-css-keyframe-animation/ */

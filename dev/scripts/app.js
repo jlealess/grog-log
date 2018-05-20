@@ -3,9 +3,8 @@ import ReactDOM from 'react-dom';
 import firebase from 'firebase';
 import {
   BrowserRouter as Router,
-  Route, Link
+  Route, Link, Redirect
 } from 'react-router-dom';
-import AccordionInstance from './AccordionInstance';
 import Header from './Header';
 import NewDrinkForm from './NewDrinkForm';
 import SearchForm from "./SearchForm";
@@ -42,7 +41,6 @@ class App extends React.Component {
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
       this.handleSearch = this.handleSearch.bind(this);
-      this.accordionize = this.accordionize.bind(this);
     }
 
     componentDidMount() {    
@@ -82,15 +80,6 @@ class App extends React.Component {
       })
 
     }
-
-    accordionize(e) {
-        console.log(e);
-        
-        //$(this).next().slideToggle('fast');
-        //Hide the other panels
-        //$(".accordion-content").not($(this).next()).slideUp('fast');
-    }
-
 
     handleChange(e) {
       this.setState({
@@ -202,6 +191,7 @@ class App extends React.Component {
     render() {
       return <Router>
           <div>
+          <Route exact path="/" render={() => <Redirect to="/bars" />} />
             <Header />
             <main>
               <Route path="/add" render={() => <NewDrinkForm handleChange={this.handleChange} handleSubmit={this.handleSubmit} barName={this.state.barName} drinkName={this.state.drinkName} drinkNotes={this.state.drinkNotes} />} />

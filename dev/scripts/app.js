@@ -36,6 +36,7 @@ class App extends React.Component {
         drinkNotes: '',
         drinkRating: '',
         search: '',
+        searchTerm: '',
         searchMatches: []
       }
       this.handleChange = this.handleChange.bind(this);
@@ -90,7 +91,7 @@ class App extends React.Component {
     handleSearch(e) {
       e.preventDefault();
       const searchTerm = this.state.search;
-      console.log(searchTerm);
+      // console.log(searchTerm);
 
       const barArray = Array.from(this.state.bars);
       const matchArray = [];
@@ -118,7 +119,9 @@ class App extends React.Component {
       }
       console.log(matchArray);
       this.setState({
-        searchMatches: matchArray
+        searchMatches: matchArray,
+        search: '',
+        searchTerm: searchTerm
       },() => {
         console.log(this.state.searchMatches);
       })
@@ -129,11 +132,13 @@ class App extends React.Component {
     handleSubmit(e) {
       e.preventDefault();
 
+      barSlug = slugify(this.state.barName);
+
       let bar = {
         barName: this.state.barName,
+        barSlug: this.state.barSlug,
         drinks: []
       }
-
 
       const drink = {
         drinkName: this.state.drinkName,
@@ -151,12 +156,10 @@ class App extends React.Component {
         return currentBar.barName === bar.barName;
       }) 
       
-      console.log(barFound);
 
       // if current bar isn't in the database, add it      
       if(barFound === -1) {
         currentBars.push(bar);
-        //console.log(currentBars)
         // add drink to drinks array
         currentBars[currentBars.length - 1].drinks.push(drink)
         dbRef.push(currentBars[currentBars.length - 1]);
@@ -188,6 +191,16 @@ class App extends React.Component {
 
     }
 
+    slugify(text) {
+      /* https://gist.github.com/mathewbyrne/1280286 */
+      return text.toString().toLowerCase()
+        .replace(/\s+/g, '-')           // Replace spaces with -
+        .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+        .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+        .replace(/^-+/, '')             // Trim - from start of text
+        .replace(/-+$/, ''); // Trim - from end of text
+    }
+
     render() {
       return <Router>
           <div>
@@ -197,7 +210,7 @@ class App extends React.Component {
               <Route path="/add" render={() => <NewDrinkForm handleChange={this.handleChange} handleSubmit={this.handleSubmit} barName={this.state.barName} drinkName={this.state.drinkName} drinkNotes={this.state.drinkNotes} />} />
               <Route path="/bars" render={() => <BarList bars={this.state.bars} />} />
               <Route path="/search" render={() => <SearchForm handleChange={this.handleChange} handleSearch={this.handleSearch} searchTerm={this.state.search} />} />
-              <Route path="/search" render={() => <SearchResults searchMatches={this.state.searchMatches} searchTerm={this.state.search} />} />
+              <Route path="/search" render={() => <SearchResults searchMatches={this.state.searchMatches} searchTerm={this.state.searchTerm} />} />
             </main>
             <Footer />
           </div>

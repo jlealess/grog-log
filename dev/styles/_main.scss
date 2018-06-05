@@ -29,8 +29,11 @@ a {
 }
 
 div.app > div {
+    background-attachment: fixed;
     background-color: $lightest-brown;
-    background-image: url(../../images/tiki-bg.svg);
+    background-image: url(../../images/tiki-bg.svg), url(../../images/tiki-bg.svg);
+    background-position: top left, top right;
+    background-size: contain, contain;
     display: grid;
     grid-template-rows: auto 1fr auto;
     min-height: 100vh;
@@ -169,7 +172,7 @@ nav {
         li {
             display: inline;
 
-            @media (min-width: 600px) {
+            @media (min-width: 300px) {
                 background-image: url(../../images/tiki-star-brown.svg);
                 background-repeat: no-repeat;
                 background-position-x: 100%;
@@ -277,15 +280,16 @@ nav {
             position: relative;
 
             input[type=search] {
+                height: 100%;
                 padding: 10px 0;
             }
     
             .button {
                 border: none;
+                bottom: 2px;
                 height: 100%;
                 padding: 0 20px;
                 position: absolute;
-                bottom: 12px;
                 right: 0;
             }
         }

@@ -1,12 +1,12 @@
 import React from 'react';
 
 class SearchResults extends React.Component {
-  componentDidMount() {
-    this.setState({
-      search: '',
-      searchMatches: []
-    });
-  }
+  // componentDidMount() {
+  //   this.setState({
+  //     search: '',
+  //     searchMatches: []
+  //   });
+  // }
 
   renderSwitch(drinkRating) {
     switch (drinkRating) {

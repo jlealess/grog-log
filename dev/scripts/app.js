@@ -11,6 +11,7 @@ import SearchForm from "./SearchForm";
 import SearchResults from './SearchResults';
 import BarList from './BarList';
 import Footer from './Footer';
+import SweetAlert from 'sweetalert-react';
 
 const config = {
   apiKey: "AIzaSyAH9g_wPpmZ2O8v1qQaiQASlZiWjPYdAxE",
@@ -37,7 +38,7 @@ class App extends React.Component {
         drinkRating: '',
         search: '',
         searchTerm: '',
-        searchMatches: []
+        searchMatches: [],
       }
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
@@ -132,11 +133,8 @@ class App extends React.Component {
     handleSubmit(e) {
       e.preventDefault();
 
-      barSlug = slugify(this.state.barName);
-
       let bar = {
         barName: this.state.barName,
-        barSlug: this.state.barSlug,
         drinks: []
       }
 
@@ -181,24 +179,13 @@ class App extends React.Component {
         barName: '',
         drinkName: '',
         drinkNotes: '',
-        drinkRating: ''
+        drinkRating: '',
       });    
       
       const radios = document.getElementsByName('drinkRating');
       for (let i=0; i<radios.length; i++) {
         radios[i].checked = false;
       }
-
-    }
-
-    slugify(text) {
-      /* https://gist.github.com/mathewbyrne/1280286 */
-      return text.toString().toLowerCase()
-        .replace(/\s+/g, '-')           // Replace spaces with -
-        .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-        .replace(/\-\-+/g, '-')         // Replace multiple - with single -
-        .replace(/^-+/, '')             // Trim - from start of text
-        .replace(/-+$/, ''); // Trim - from end of text
     }
 
     render() {

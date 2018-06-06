@@ -173,7 +173,6 @@ class App extends React.Component {
           .update({
             drinks: currentBars[barFound].drinks
           });
-
       }
 
       console.log(currentBars);

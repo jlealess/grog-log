@@ -11,7 +11,6 @@ import SearchForm from "./SearchForm";
 import SearchResults from './SearchResults';
 import BarList from './BarList';
 import Footer from './Footer';
-import SweetAlert from 'sweetalert-react';
 
 const config = {
   apiKey: "AIzaSyAH9g_wPpmZ2O8v1qQaiQASlZiWjPYdAxE",
@@ -36,9 +35,12 @@ class App extends React.Component {
         drinkName: '',
         drinkNotes: '',
         drinkRating: '',
+        savedBarName: '',
+        savedDrinkName: '',
         search: '',
         searchTerm: '',
         searchMatches: [],
+        showNewDrinkStatus: false
       }
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
@@ -85,7 +87,8 @@ class App extends React.Component {
 
     handleChange(e) {
       this.setState({
-        [e.target.name]: e.target.value
+        [e.target.name]: e.target.value,
+        showNewDrinkStatus: false
       })
     }
 
@@ -180,6 +183,9 @@ class App extends React.Component {
         drinkName: '',
         drinkNotes: '',
         drinkRating: '',
+        savedBarName: bar.barName,
+        savedDrinkName: drink.drinkName,
+        showNewDrinkStatus: true
       });    
       
       const radios = document.getElementsByName('drinkRating');
@@ -194,7 +200,7 @@ class App extends React.Component {
           <Route exact path="/" render={() => <Redirect to="/add" />} />
             <Header />
             <main>
-              <Route path="/add" render={() => <NewDrinkForm handleChange={this.handleChange} handleSubmit={this.handleSubmit} barName={this.state.barName} drinkName={this.state.drinkName} drinkNotes={this.state.drinkNotes} />} />
+              <Route path="/add" render={() => <NewDrinkForm handleChange={this.handleChange} handleSubmit={this.handleSubmit} barName={this.state.barName} drinkName={this.state.drinkName} drinkNotes={this.state.drinkNotes} savedDrinkName={this.state.savedDrinkName} savedBarName={this.state.savedBarName} displayStatus={this.state.showNewDrinkStatus}/>} />
               <Route path="/bars" render={() => <BarList bars={this.state.bars} />} />
               <Route path="/search" render={() => <SearchForm handleChange={this.handleChange} handleSearch={this.handleSearch} searchTerm={this.state.search} />} />
               <Route path="/search" render={() => <SearchResults searchMatches={this.state.searchMatches} searchTerm={this.state.searchTerm} />} />

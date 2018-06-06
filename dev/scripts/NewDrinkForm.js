@@ -1,7 +1,8 @@
 import React from 'react';
 
 const NewDrinkForm = (props) => {
-    return <form action="" id="newDrinkForm" onSubmit={props.handleSubmit}>
+    return (<div>
+    <form action="" id="newDrinkForm" onSubmit={props.handleSubmit}>
         <div>
           <label htmlFor="barName">Bar</label>
           <input type="text" required id="barName" name="barName" onChange={props.handleChange} value={props.barName} />
@@ -28,7 +29,9 @@ const NewDrinkForm = (props) => {
           </div>
         </div>
         <input type="submit" className="button button-submit" value="Log that grog" />
-      </form>;
+      </form>
+      {props.displayStatus === true ? <div className="new-drink-message">{props.savedDrinkName} has been added to {props.savedBarName}!</div> : null}
+    </div>)
 }
 
 export default NewDrinkForm;
